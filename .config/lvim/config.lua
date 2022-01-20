@@ -32,6 +32,10 @@ lvim.colorscheme = "onedarker"
 lvim.leader = "space"
 -- add your own keymapping
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
+lvim.keys.normal_mode["Y"] = "y$"
+lvim.keys.normal_mode["n"] = "nzzzv"
+lvim.keys.normal_mode["N"] = "Nzzzv"
+lvim.keys.normal_mode["J"] = "mzJ`z"
 -- unmap a default keymapping
 -- lvim.keys.normal_mode["<C-Up>"] = false
 -- edit a default keymapping
@@ -175,6 +179,7 @@ lvim.plugins = {
     {"ggandor/lightspeed.nvim"},
 }
 
+require("luasnip/loaders/from_vscode").load { paths = { "~/.snippets" } }
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- lvim.autocommands.custom_groups = {
 --   { "BufWinEnter", "*.lua", "setlocal ts=8 sw=8" },

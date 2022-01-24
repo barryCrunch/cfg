@@ -174,9 +174,27 @@ lvim.builtin.treesitter.highlight.enabled = true
 lvim.plugins = {
     {"dracula/vim"},
     {"tpope/vim-fugitive"},
+    {"tpope/vim-repeat"},
+    {
+      "tpope/vim-surround",
+      keys = {"c", "d", "y"}
+    },
     {"shaunsingh/nord.nvim"},
     {"projekt0n/github-nvim-theme"},
-    {"ggandor/lightspeed.nvim"},
+    {
+      "ggandor/lightspeed.nvim",
+      event = "BufRead",
+    },
+    {
+      "nvim-telescope/telescope-fzy-native.nvim",
+      run = "make",
+      event = "BufRead",
+    },
+    {
+      "metakirby5/codi.vim",
+      cmd = "Codi",
+    },
+    {"aserowy/tmux.nvim"},
 }
 
 require("luasnip/loaders/from_vscode").load { paths = { "~/.snippets" } }

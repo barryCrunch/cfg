@@ -22,6 +22,10 @@ local opts = {
   }
 }
 require("lvim.lsp.manager").setup("pylsp", opts)
+require("dapui").setup()
+
+lvim.builtin.dap.active = true
+
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save = true
@@ -36,6 +40,7 @@ lvim.keys.normal_mode["Y"] = "y$"
 lvim.keys.normal_mode["n"] = "nzzzv"
 lvim.keys.normal_mode["N"] = "Nzzzv"
 lvim.keys.normal_mode["J"] = "mzJ`z"
+lvim.keys.visual_mode["p"] = '"_dP'
 -- unmap a default keymapping
 -- lvim.keys.normal_mode["<C-Up>"] = false
 -- edit a default keymapping
@@ -70,6 +75,15 @@ lvim.keys.normal_mode["J"] = "mzJ`z"
 --   l = { "<cmd>Trouble loclist<cr>", "LocationList" },
 --   w = { "<cmd>Trouble lsp_workspace_diagnostics<cr>", "Diagnostics" },
 -- }
+
+  lvim.builtin.which_key.mappings["dI"] = {
+    "<cmd>lua require'dap.ui.widgets'.hover()<cr>", "Inspect Variable",
+  }
+
+  lvim.builtin.which_key.mappings["dU"] = {
+    "<cmd>lua require'dapui'.toggle()<cr>", "Toggle UI",
+  }
+
 lvim.builtin.which_key.mappings["G"] = {
   name = "Git Fugitive",
   a = {"<cmd>Git add .<CR>", "Git add all"},
@@ -177,12 +191,15 @@ lvim.plugins = {
     {"tpope/vim-repeat"},
     {
       "tpope/vim-surround",
+      opt = false,
+      event = "VimEnter",
       keys = {"c", "d", "y"}
     },
     {"shaunsingh/nord.nvim"},
     {"projekt0n/github-nvim-theme"},
     {
       "ggandor/lightspeed.nvim",
+      opt = false,
       event = "BufRead",
     },
     {
@@ -195,6 +212,8 @@ lvim.plugins = {
       cmd = "Codi",
     },
     {"aserowy/tmux.nvim"},
+    {"mfussenegger/nvim-dap-python"},
+    {"rcarriga/nvim-dap-ui"},
 }
 
 require("luasnip/loaders/from_vscode").load { paths = { "~/.snippets" } }

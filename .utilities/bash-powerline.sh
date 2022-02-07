@@ -17,6 +17,7 @@ __powerline() {
     SYMBOL_GIT_PUSH=${SYMBOL_GIT_PUSH:-↑}
     SYMBOL_GIT_PULL=${SYMBOL_GIT_PULL:-↓}
 
+
     if [[ -z "$PS_SYMBOL" ]]; then
       case "$(uname)" in
           Darwin)   PS_SYMBOL='';;
@@ -83,7 +84,14 @@ __powerline() {
             local git="$COLOR_GIT$(__git_info)$COLOR_RESET"
         fi
 
-        PS1="$cwd$git$symbol"
+        # Virtualenv
+        if [ ! -z $VIRTUAL_ENV ]; then
+          IFS='/' read -a array <<< $VIRTUAL_ENV
+          local venv="$COLOR_SUCCESS(${array[-1]})$COLOR_RESET "
+        else
+          local venv=""
+        fi
+        PS1="$venv$cwd$git$symbol"
     }
 
     PROMPT_COMMAND="ps1${PROMPT_COMMAND:+; $PROMPT_COMMAND}"

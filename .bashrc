@@ -107,6 +107,13 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+# Leverage FZF and grep to parse SSh Config file
+ssf() {
+  host=$(grep -e "^Host " ~/.ssh/config | awk '{print $2}' | fzf)
+  echo "SSH session started, connecting to" $host
+  ssh -oKexAlgorithms=+diffie-hellman-group14-sha1 $host
+}
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -144,7 +151,7 @@ export KUBE_EDITOR="nvim"
 export NOTES_DIR="/home/mbarry/notes"
 
 
-bind -x '"\C-s":ssh **<tab>'
+bind -x '"\C-s":ssf<cr>'
 
 if [ -e $HOME/.aliases ]; then
     source $HOME/.aliases
@@ -160,5 +167,6 @@ export NVM_DIR="$HOME/.nvm"
 source ~/.utilities/bash-powerline.sh
 
 
-cd ~
 . "$HOME/.cargo/env"
+
+complete -C /usr/bin/terraform terraform

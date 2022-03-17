@@ -1,3 +1,10 @@
+lvim.builtin.dashboard.active = true
+lvim.builtin.terminal.active = true
+lvim.builtin.nvimtree.setup.view.side = "left"
+lvim.builtin.nvimtree.show_icons.git = 0
+lvim.builtin.bufferline.active = true
+
+lvim.lsp.automatic_servers_installation = true
 --[[
 lvim is the global options object
 
@@ -11,6 +18,24 @@ an executable
 -- lvim.lsp.automatic_servers_installation = false
 vim.list_extend(lvim.lsp.override, { "pyright", "pylsp" })
 
+local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+parser_config.bicep = {
+  install_info = {
+    url = "~/repos/tree-sitter-bicep", -- local path or git repo
+    files = {"src/parser.c"},
+    -- optional entries:
+    branch = "main", -- default branch in case of git repo if different from master
+    generate_requires_npm = false, -- if stand-alone parser without npm dependencies
+    requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
+  },
+  filetype = "bicep",
+}
+
+local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
+parser_configs.hcl = {
+  filetype = "hcl", "terraform",
+}
+
 local opts = {
   settings = {
     pylsp = {
@@ -22,10 +47,9 @@ local opts = {
   }
 }
 require("lvim.lsp.manager").setup("pylsp", opts)
-require("dapui").setup()
+--require("dapui").setup()
 
 lvim.builtin.dap.active = true
-
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save = true
@@ -41,6 +65,8 @@ lvim.keys.normal_mode["n"] = "nzzzv"
 lvim.keys.normal_mode["N"] = "Nzzzv"
 lvim.keys.normal_mode["J"] = "mzJ`z"
 lvim.keys.visual_mode["p"] = '"_dP'
+lvim.keys.normal_mode["<M-i>"] = "<Esc><Cmd>ToggleTerm<CR>"
+lvim.keys.insert_mode["<M-i>"] = "<Esc><Cmd>ToggleTerm<CR>"
 -- unmap a default keymapping
 -- lvim.keys.normal_mode["<C-Up>"] = false
 -- edit a default keymapping
@@ -87,14 +113,12 @@ lvim.keys.visual_mode["p"] = '"_dP'
 lvim.builtin.which_key.mappings["G"] = {
   name = "Git Fugitive",
   a = {"<cmd>Git add .<CR>", "Git add all"},
-  d = {"<cmd>Gvdiffsplit<CR>", "Git diff"}
+  s = {"<cmd>Git status<CR>", "Git status"},
+  d = {"<cmd>Gvdiffsplit<CR>", "Git diff"},
+  G = {"<cmd>Git<CR>", "Interactive Git"}
 }
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
-lvim.builtin.dashboard.active = true
-lvim.builtin.terminal.active = true
-lvim.builtin.nvimtree.setup.view.side = "left"
-lvim.builtin.nvimtree.show_icons.git = 0
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
@@ -214,6 +238,9 @@ lvim.plugins = {
     {"aserowy/tmux.nvim"},
     {"mfussenegger/nvim-dap-python"},
     {"rcarriga/nvim-dap-ui"},
+    {"tvaintrob/bicep.vim"},
+    {"folke/tokyonight.nvim",
+      tokyonight_style = "storm"},
 }
 
 require("luasnip/loaders/from_vscode").load { paths = { "~/.snippets" } }

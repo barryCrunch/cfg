@@ -110,12 +110,20 @@ lvim.keys.insert_mode["<M-i>"] = "<Esc><Cmd>ToggleTerm<CR>"
     "<cmd>lua require'dapui'.toggle()<cr>", "Toggle UI",
   }
 
+  lvim.builtin.which_key.mappings["sw"] = {
+    "<cmd>Telescope vw live_grep<cr>", "Search Wiki",
+  }
+
 lvim.builtin.which_key.mappings["G"] = {
   name = "Git Fugitive",
   a = {"<cmd>Git add .<CR>", "Git add all"},
   s = {"<cmd>Git status<CR>", "Git status"},
   d = {"<cmd>Gvdiffsplit<CR>", "Git diff"},
   G = {"<cmd>Git<CR>", "Interactive Git"}
+}
+
+lvim.builtin.which_key.mappings["n"] = {
+  name = "Notes - VimWiki",
 }
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
@@ -236,13 +244,22 @@ lvim.plugins = {
       cmd = "Codi",
     },
     {"aserowy/tmux.nvim"},
+    {"ElPiloto/telescope-vimwiki.nvim"},
     {"mfussenegger/nvim-dap-python"},
     {"rcarriga/nvim-dap-ui"},
     {"tvaintrob/bicep.vim"},
     {"folke/tokyonight.nvim",
       tokyonight_style = "storm"},
+    {
+      "vimwiki/vimwiki",
+      config = function()
+        vim.cmd ("let g:vimwiki_map_prefix = '<Leader>n'")
+        vim.cmd ("let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]")
+      end,
+    },
 }
 
+require("luasnip").filetype_extend("vimwiki", {"markdown"})
 require("luasnip/loaders/from_vscode").load { paths = { "~/.snippets" } }
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- lvim.autocommands.custom_groups = {

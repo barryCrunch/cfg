@@ -158,6 +158,7 @@ if [ -e $HOME/.aliases ]; then
 fi
 export PATH="$PATH:/home/mbarry/development/flutter/bin"
 export PATH="$PATH:/home/mbarry/.local/share/nvim/lsp_servers/pylsp/venv/bin"
+export EDITOR="lvim"
 
 
 export NVM_DIR="$HOME/.nvm"

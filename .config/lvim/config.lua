@@ -248,6 +248,7 @@ lvim.plugins = {
     {"mfussenegger/nvim-dap-python"},
     {"rcarriga/nvim-dap-ui"},
     {"tvaintrob/bicep.vim"},
+    {"michal-h21/vimwiki-sync"},
     {"folke/tokyonight.nvim",
       tokyonight_style = "storm"},
     {
